@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { FavorisListComponent } from './favoris-list/favoris-list.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { DateSimplePipe } from './shared/date-simple.pipe';
 import {ContactsService} from './service/contacts.service';
 import { PersoUppercasePipe } from './shared/perso-uppercase.pipe';
 import { ApiComponent } from './api/api.component';
+import {AuthService} from './service/auth.service';
+import {TokenInterceptor} from './service/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,10 @@ import { ApiComponent } from './api/api.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [ContactsService],
+  providers: [
+    ContactsService, AuthService,
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -64,11 +64,7 @@ export class ContactsService {
   }
 
   removeContactOnDb(contact: IContact): void {
-    this.http.delete('https://gorest.co.in/public-api/users/' + contact.id, {
-      headers: new HttpHeaders().set(
-        'Authorization', 'Bearer ' + this.authService.getTokenFromLocalStorage()
-      )
-    }).toPromise()
+    this.http.delete('https://gorest.co.in/public-api/users/' + contact.id).toPromise()
       .then((response: any) => {
         if (response.code === 204) {
           this.contactsSubject.value.splice(this.contactsSubject.value.indexOf(contact), 1);
