@@ -1,0 +1,71 @@
+<!-- ToolBar -->
+<div class="d-flex justify-content-between">
+  <h2 *ngIf="meta$ | async as metausers">
+    {{ metausers.pagination?.total }} contacts
+  </h2>
+
+
+  <button class="btn btn-rounded btn-link btn-small"
+          (click)="sortByName()">
+    Tri par nom
+    <i [class.fa-arrow-circle-up]="sortByNameAscOrDsc=='ASC'"
+       [class.fa-arrow-circle-down]="sortByNameAscOrDsc=='DSC'"
+       class="fas fa-arrow-circle-up"></i>
+  </button>
+</div>
+
+
+<!-- Search bar -->
+<input #research (keyup)="search(research.value)" placeholder="rechercher..." type="text" class="form-control"/>
+
+<!-- List -->
+<ul class="users-list list-group">
+  <li *ngFor="let contact of (contacts$ | async)" class="list-group-item d-flex justify-content-between">
+    <span class="d-flex justity-content-center align-items-center">
+      <button *ngIf="isLogin()===true" (click)="deleteContact(contact)" class="btn btn-light"><i class="far fa-trash-alt"></i></button>
+      <span [class.isActive]="contact.status=='Active'"
+            class="badge badge-tertiary avatar">{{contact.name | printInitials}}</span>
+      {{contact.name}}
+    </span>
+    <span>
+      Ajouté le {{contact.created_at | date: 'EEEE d MMMM yyyy' | lowercase}}
+      <span>
+          <button class="btn" (click)="addFavoris(contact)">
+                  <i [class.far]="contact.isFavoris!=true"
+                     [class.fas]="contact.isFavoris==true"
+                     [style.color]="contact.isFavoris==true?'orange':'black'"
+                     class="far fa-star"></i>
+          </button>
+        </span>
+    </span>
+  </li>
+</ul>
+
+<!-- PAGINATION  -->
+<div *ngIf="meta$ | async as metausers" class="d-flex justify-content-between mt-3">
+  <p >Page {{ metausers.pagination?.page }}/ {{ metausers.pagination?.pages}}</p>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li (click)="previousPage(1)">
+        <button [disabled]="metausers.pagination?.page==1" class="btn btn-link" href="#">
+          1
+        </button>
+      </li>
+      <li (click)="previousPage(metausers.pagination?.page)">
+        <button [disabled]="metausers.pagination?.page==1" class="btn btn-link" href="#">
+          <
+        </button>
+      </li>
+      <li (click)="nextPage(metausers.pagination.page)" >
+        <button [disabled]="metausers.pagination?.page==metausers.pagination?.pages" class="btn btn-link" href="#">
+          >
+        </button>
+      </li>
+      <li (click)="nextPage(metausers.pagination.pages)" >
+        <button [disabled]="metausers.pagination?.page==metausers.pagination?.pages" class="btn btn-link" href="#">
+          {{metausers.pagination?.pages}}
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,11 @@
+<h2>Favoris</h2>
+<hr/>
+<ul class="list-group">
+  <li *ngFor="let favori of (favors$ | async)" class="list-group-item d-flex justify-content-between">
+    {{favori.name}}
+    <button class="btn" (click)="removeFavoris(favori)">
+      <i class="fas fa-arrow-alt-circle-right"></i>
+    </button>
+  </li>
+</ul>
+
