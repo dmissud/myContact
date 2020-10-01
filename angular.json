@@ -66,7 +66,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "myContact:build"
+            "browserTarget": "myContact:build",
+            "port": 4202,
+            "host": "0.0.0.0"
           },
           "configurations": {
             "production": {
@@ -123,6 +125,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "myContact"
+    }
+  },
+  "defaultProject": "myContact",
+  "cli": {
+    "analytics": "2beb5a76-9539-4c7f-a606-fda5c607b18c"
+  }
 }
